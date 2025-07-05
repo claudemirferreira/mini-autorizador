@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum MensagemEnum {
-    CARTAO_EXISTENTE("Cartão já existe na base de dados");
+    CARTAO_EXISTENTE("Cartão já existe na base de dados"),
+    CARTAO_NAO_ENCONTRADO("Cartão não eexiste na base de dados");
 
     private final String descricao;
 

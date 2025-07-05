@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface CartaoRepository {
     CartaoDomain criar(CartaoDomain cartao);
-    Optional<CartaoEntity> findByNumeroCartao(String numeroCartao);
+    Optional<CartaoDomain> findByNumeroCartao(String numeroCartao);
 }

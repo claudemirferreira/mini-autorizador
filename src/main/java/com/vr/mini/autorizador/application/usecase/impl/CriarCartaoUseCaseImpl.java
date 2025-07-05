@@ -17,7 +17,7 @@ public class CriarCartaoUseCaseImpl implements CriarCartaoUseCase {
     private final CartaoRepository cartaoRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public CartaoDomain criar(String numeroCartao, String senha) {
+    public CartaoDomain execute(String numeroCartao, String senha) {
         log.info("Iniciando a criacao do cartao {}", numeroCartao);
         existsByNumeroCartao(numeroCartao);
         CartaoDomain cartao =  CartaoDomain.criarCartao(passwordEncoder.encode(senha), numeroCartao);
