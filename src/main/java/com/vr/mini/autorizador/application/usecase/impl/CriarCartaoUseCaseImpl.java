@@ -17,17 +17,17 @@ public class CriarCartaoUseCaseImpl implements CriarCartaoUseCase {
     private final CartaoRepository cartaoRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public CartaoDomain criar(String numeroCartao, String senha) throws Exception {
+    public CartaoDomain criar(String numeroCartao, String senha) {
         log.info("Iniciando a criacao do cartao {}", numeroCartao);
         existsByNumeroCartao(numeroCartao);
         CartaoDomain cartao =  CartaoDomain.criarCartao(passwordEncoder.encode(senha), numeroCartao);
-        cartao = cartaoRepository.criar(cartao);
+        cartaoRepository.criar(cartao);
         log.info("finalizou a criacao do cartao {}", numeroCartao);
         return cartao;
     }
 
-    private void existsByNumeroCartao(String numeroCartao) throws Exception{
-        if (cartaoRepository.findByNumeroCartao(numeroCartao).isEmpty()) {
+    private void existsByNumeroCartao(String numeroCartao) {
+        if (cartaoRepository.findByNumeroCartao(numeroCartao).isPresent()) {
             throw new CartaoJaExisteException();
         }
     }

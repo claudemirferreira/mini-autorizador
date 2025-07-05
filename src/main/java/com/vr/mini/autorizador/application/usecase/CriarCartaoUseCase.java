@@ -5,5 +5,5 @@ import com.vr.mini.autorizador.domain.CartaoDomain;
 
 public interface CriarCartaoUseCase {
 
-    CartaoDomain criar(String numeroCartao, String senha) throws Exception;
+    CartaoDomain criar(String numeroCartao, String senha);
 }
