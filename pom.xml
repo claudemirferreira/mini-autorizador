@@ -12,7 +12,15 @@
 	<artifactId>mini-autorizador</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mini-autorizador</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Mini Autorizador VR - Clean Architecture, BDD, Java 21</description>
+	<properties>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<spring-boot.version>3.2.5</spring-boot.version>
+		<cucumber.version>7.14.0</cucumber.version>
+	</properties>
 	<url/>
 	<licenses>
 		<license/>
@@ -26,9 +34,6 @@
 		<tag/>
 		<url/>
 	</scm>
-	<properties>
-		<java.version>21</java.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -38,6 +43,20 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+
+		<!--  BCrypt para senha  -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+		<!--  DevTools  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 
 		<!--  Lombok  -->
@@ -53,7 +72,6 @@
 			<version>8.0.29</version>
 		</dependency>
 
-
 		<!--  Flyway  -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -64,6 +82,19 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 			<version>9.21.2</version>
+		</dependency>
+
+		<!--  MapStruct  -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${mapstruct.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
