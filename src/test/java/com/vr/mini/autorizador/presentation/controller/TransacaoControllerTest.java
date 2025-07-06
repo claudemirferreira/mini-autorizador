@@ -1,7 +1,6 @@
 package com.vr.mini.autorizador.presentation.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -59,9 +58,9 @@ class TransacaoControllerTest {
         );
 
         doNothing().when(debitarUseCase).execute(
-                eq("6549873025634501"),
-                eq("123456"),
-                eq(new BigDecimal("150.00"))
+                "6549873025634501",
+                "123456",
+                new BigDecimal("150.00")
         );
 
         // Act & Assert
@@ -188,9 +187,9 @@ class TransacaoControllerTest {
         );
 
         doNothing().when(debitarUseCase).execute(
-                eq("6549873025634501"),
-                eq("123456"),
-                eq(new BigDecimal("150.75"))
+                "6549873025634501",
+                "123456",
+                new BigDecimal("150.75")
         );
 
         // Act & Assert
@@ -212,9 +211,9 @@ class TransacaoControllerTest {
         );
 
         doNothing().when(debitarUseCase).execute(
-                eq("6549873025634501"),
-                eq("123456"),
-                eq(new BigDecimal("0.01"))
+                "6549873025634501",
+                "123456",
+                new BigDecimal("0.01")
         );
 
         // Act & Assert
@@ -236,9 +235,9 @@ class TransacaoControllerTest {
         );
 
         doNothing().when(debitarUseCase).execute(
-                eq("6549873025634501"),
-                eq("123456"),
-                eq(new BigDecimal("999999.99"))
+                "6549873025634501",
+                "123456",
+                new BigDecimal("999999.99")
         );
 
         // Act & Assert
