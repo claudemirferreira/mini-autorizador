@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class DebitarUseCaseImpl implements DebitarUseCase {
     private final CartaoRepository cartaoRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder;
     
     @Transactional
     public void execute(String numeroCartao, String senha, BigDecimal valor) {

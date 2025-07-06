@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CriarCartaoUseCaseImpl implements CriarCartaoUseCase {
     private final CartaoRepository cartaoRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public CartaoDomain execute(String numeroCartao, String senha) {
         log.info("Iniciando a criacao do cartao {}", numeroCartao);
