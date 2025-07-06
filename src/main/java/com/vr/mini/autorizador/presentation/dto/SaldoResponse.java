@@ -4,33 +4,32 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
 @Schema(
-        description = "Representação do saldo e informações de um cartão",
+        description = "Resposta contendo informações de saldo do cartão",
         name = "SaldoResponse"
 )
 public record SaldoResponse(
         @Schema(
-                description = "Número do cartão associado ao saldo",
-                example = "1234567890123456",
-                requiredMode = Schema.RequiredMode.REQUIRED,
-                minLength = 16,
-                maxLength = 16
+                description = "Número do cartão",
+                example = "6549873025634501",
+                requiredMode = Schema.RequiredMode.REQUIRED
         )
         String numeroCartao,
 
         @Schema(
-                description = "Valor do saldo disponível no cartão",
+                description = "Valor do saldo disponível",
                 example = "500.00",
-                requiredMode = Schema.RequiredMode.REQUIRED,
-                implementation = BigDecimal.class
+                requiredMode = Schema.RequiredMode.REQUIRED
         )
-        BigDecimal saldo
+        BigDecimal saldo,
+
+        @Schema(
+                description = "Saldo formatado em moeda",
+                example = "R$ 500,00",
+                accessMode = Schema.AccessMode.READ_ONLY
+        )
+        String saldoFormatado
 ) {
-    @Schema(
-            description = "Representação formatada do saldo",
-            example = "R$ 500,00",
-            accessMode = Schema.AccessMode.READ_ONLY
-    )
-    public String getSaldoFormatado() {
-        return String.format("R$ %,.2f", saldo);
+    public SaldoResponse(String numeroCartao, BigDecimal saldo) {
+        this(numeroCartao, saldo, String.format("R$ %,.2f", saldo));
     }
 }

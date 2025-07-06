@@ -1,17 +1,10 @@
 package com.vr.mini.autorizador.presentation.controller;
 
-import java.util.Map;
-
 import com.vr.mini.autorizador.application.usecase.ConsultarSaldoCartaoUseCase;
 import com.vr.mini.autorizador.application.usecase.CriarCartaoUseCase;
 import com.vr.mini.autorizador.domain.CartaoDomain;
 import com.vr.mini.autorizador.presentation.dto.CriarCartaoRequest;
 import com.vr.mini.autorizador.presentation.dto.SaldoResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,6 +14,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cartoes")
@@ -44,10 +41,16 @@ public class CartaoController {
                     description = "Cartão criado com sucesso",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = Map.class),
+                            schema = @Schema(implementation = SaldoResponse.class),
                             examples = @ExampleObject(
                                     name = "cartao_criado",
-                                    value = "{ \"numeroCartao\": \"6549873025634501\" }"
+                                    value = """
+                        {
+                            "numeroCartao": "6549873025634501",
+                            "saldo": 500.00,
+                            "saldoFormatado": "R$ 500,00"
+                        }
+                        """
                             )
                     )
             ),
@@ -81,7 +84,7 @@ public class CartaoController {
             )
     })
     @PostMapping("/criar")
-    public ResponseEntity<Map<String, String>> criarCartao(
+    public ResponseEntity<SaldoResponse> criarCartao(
             @Parameter(
                     description = "Dados para criação do cartão",
                     required = true,
@@ -91,7 +94,10 @@ public class CartaoController {
 
         CartaoDomain cartao = criarCartaoUseCase.execute(request.getNumeroCartao(), request.getSenha());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Map.of("numeroCartao", cartao.getNumeroCartao()));
+                .body(new SaldoResponse(
+                        cartao.getNumeroCartao(),
+                        cartao.getSaldo()
+                ));
     }
 
     @Operation(
@@ -108,7 +114,13 @@ public class CartaoController {
                             schema = @Schema(implementation = SaldoResponse.class),
                             examples = @ExampleObject(
                                     name = "saldo_sucesso",
-                                    value = "{ \"saldo\": 500.00 }"
+                                    value = """
+                        {
+                            "numeroCartao": "6549873025634501",
+                            "saldo": 500.00,
+                            "saldoFormatado": "R$ 500,00"
+                        }
+                        """
                             )
                     )
             ),
@@ -140,11 +152,13 @@ public class CartaoController {
             @Parameter(
                     description = "Número do cartão (16 dígitos)",
                     example = "6549873025634501",
-                    required = true
-            )
+                    required = true)
             @PathVariable String numeroCartao) {
 
         CartaoDomain cartaoDomain = consultarSaldoCartaoUseCase.execute(numeroCartao);
-        return ResponseEntity.ok(new SaldoResponse( cartaoDomain.getNumeroCartao(), cartaoDomain.getSaldo()));
+        return ResponseEntity.ok(new SaldoResponse(
+                cartaoDomain.getNumeroCartao(),
+                cartaoDomain.getSaldo()
+        ));
     }
 }
