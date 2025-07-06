@@ -19,6 +19,8 @@
 		<cucumber.version>7.14.0</cucumber.version>
 		<mysql.version>8.0.33</mysql.version>
 		<flyway.version>10.11.0</flyway.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencyManagement>

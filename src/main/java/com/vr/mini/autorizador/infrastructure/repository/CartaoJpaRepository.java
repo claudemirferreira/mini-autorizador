@@ -16,8 +16,10 @@ public interface CartaoJpaRepository extends JpaRepository<CartaoEntity, String>
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @QueryHints({
-            @QueryHint(name = "javax.persistence.lock.timeout", value = "5000") // 5 segundos
+            @QueryHint(name = "jakarta.persistence.lock.timeout", value = "5000"),
+            @QueryHint(name = "jakarta.persistence.query.timeout", value = "5000")
     })
     @Query("SELECT c FROM CartaoEntity c WHERE c.numeroCartao = :numeroCartao")
-    Optional<CartaoEntity> debitar(@Param("numeroCartao") String numeroCartao);
+    Optional<CartaoEntity> findByNumeroCartaoForUpdate(@Param("numeroCartao") String numeroCartao);
+
 }

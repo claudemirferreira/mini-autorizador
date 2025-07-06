@@ -17,19 +17,19 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class CartaoRepositoryImpl implements CartaoRepository {
-    private final CartaoJpaRepository jpaRepository;
+    private final CartaoJpaRepository cartaoJpaRepository;
     private final CartaoMapper mapper;
 
     @Override
     public CartaoDomain criar(CartaoDomain cartao) {
         CartaoEntity entity = mapper.toEntity(cartao);
-        return mapper.toDomain(jpaRepository.save(entity));
+        return mapper.toDomain(cartaoJpaRepository.save(entity));
     }
 
     @Override
     public Optional<CartaoDomain> findByNumeroCartao(String numeroCartao) {
         log.debug("Buscando cartão por número: {}", numeroCartao);
-        return jpaRepository.findByNumeroCartao(numeroCartao)
+        return cartaoJpaRepository.findByNumeroCartao(numeroCartao)
                 .map(entity -> {
                     log.debug("Cartão encontrado: {}", numeroCartao);
                     return mapper.toDomain(entity);
@@ -38,13 +38,16 @@ public class CartaoRepositoryImpl implements CartaoRepository {
 
     @Override
     public CartaoDomain debitar(CartaoDomain cartaoDomain, BigDecimal valor) {
-        CartaoEntity cartao = jpaRepository.debitar(cartaoDomain.getNumeroCartao())
+        CartaoEntity cartao = cartaoJpaRepository.findByNumeroCartaoForUpdate(cartaoDomain.getNumeroCartao())
                 .orElseThrow(() -> new CartaoNaoEncontradoException(cartaoDomain.getNumeroCartao()));
-        if (cartao.getSaldo().compareTo(valor) < 0) {
-            throw new SaldoInsuficienteException();
-        }
+        validarSaldo(cartao, valor);
         cartao.setSaldo(cartao.getSaldo().subtract(valor));
         return mapper.toDomain(cartao);
     }
 
+    private void validarSaldo(CartaoEntity cartao, BigDecimal valor) {
+        if (cartao.getSaldo().compareTo(valor) < 0) {
+            throw new SaldoInsuficienteException();
+        }
+    }
 }

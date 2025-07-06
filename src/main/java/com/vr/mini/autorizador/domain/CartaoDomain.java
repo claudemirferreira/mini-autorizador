@@ -16,7 +16,7 @@ public class CartaoDomain {
     private BigDecimal saldo;
     private static final BigDecimal SALDO_INICIAL = BigDecimal.valueOf(500.00);
 
-    public static CartaoDomain criarCartao(String senha, String numeroCartao) {
+    public static CartaoDomain criarCartao(String numeroCartao, String senha) {
         return CartaoDomain.builder()
                 .numeroCartao(numeroCartao)
                 .senha(senha)

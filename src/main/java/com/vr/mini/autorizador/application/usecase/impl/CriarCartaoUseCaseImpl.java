@@ -20,7 +20,7 @@ public class CriarCartaoUseCaseImpl implements CriarCartaoUseCase {
     public CartaoDomain execute(String numeroCartao, String senha) {
         log.info("Iniciando a criacao do cartao {}", numeroCartao);
         existsByNumeroCartao(numeroCartao);
-        CartaoDomain cartao =  CartaoDomain.criarCartao(passwordEncoder.encode(senha), numeroCartao);
+        CartaoDomain cartao =  CartaoDomain.criarCartao(numeroCartao, passwordEncoder.encode(senha));
         cartaoRepository.criar(cartao);
         log.info("finalizou a criacao do cartao {}", numeroCartao);
         return cartao;
