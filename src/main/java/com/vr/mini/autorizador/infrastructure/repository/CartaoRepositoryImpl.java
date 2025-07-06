@@ -18,12 +18,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CartaoRepositoryImpl implements CartaoRepository {
     private final CartaoJpaRepository cartaoJpaRepository;
-    private final CartaoMapper mapper;
+    private final CartaoMapper cartaoMapper;
 
     @Override
     public CartaoDomain criar(CartaoDomain cartao) {
-        CartaoEntity entity = mapper.toEntity(cartao);
-        return mapper.toDomain(cartaoJpaRepository.save(entity));
+        CartaoEntity entity = cartaoMapper.toEntity(cartao);
+        return cartaoMapper.toDomain(cartaoJpaRepository.save(entity));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CartaoRepositoryImpl implements CartaoRepository {
         return cartaoJpaRepository.findByNumeroCartao(numeroCartao)
                 .map(entity -> {
                     log.debug("Cartão encontrado: {}", numeroCartao);
-                    return mapper.toDomain(entity);
+                    return cartaoMapper.toDomain(entity);
                 });
     }
 
@@ -42,7 +42,7 @@ public class CartaoRepositoryImpl implements CartaoRepository {
                 .orElseThrow(() -> new CartaoNaoEncontradoException(cartaoDomain.getNumeroCartao()));
         validarSaldo(cartao, valor);
         cartao.setSaldo(cartao.getSaldo().subtract(valor));
-        return mapper.toDomain(cartao);
+        return cartaoMapper.toDomain(cartao);
     }
 
     private void validarSaldo(CartaoEntity cartao, BigDecimal valor) {
