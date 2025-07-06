@@ -142,7 +142,7 @@ public class CartaoController {
                             mediaType = "application/json",
                             examples = @ExampleObject(
                                     name = "numero_invalido",
-                                    value = "{ \"erro\": \"Número do cartão deve ter 16 dígitos\" }"
+                                    value = "{ \"erro\": \"Número do cartão deve ter mais de um dígitos\" }"
                             )
                     )
             )
