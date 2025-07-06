@@ -92,7 +92,7 @@ public class CartaoController {
             )
             @Valid @RequestBody CriarCartaoRequest request) {
 
-        CartaoDomain cartao = criarCartaoUseCase.execute(request.getNumeroCartao(), request.getSenha());
+        CartaoDomain cartao = criarCartaoUseCase.execute(request.numeroCartao(), request.senha());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new SaldoResponse(
                         cartao.getNumeroCartao(),

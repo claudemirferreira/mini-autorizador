@@ -110,15 +110,15 @@ public class TransacaoController {
             @Valid @RequestBody TransacaoRequest request) {
 
         debitarUseCase.execute(
-                request.getNumeroCartao(),
-                request.getSenhaCartao(),
-                request.getValor()
+                request.numeroCartao(),
+                request.senhaCartao(),
+                request.valor()
         );
 
         var response = new TransacaoResponse(
                 "Operação realizada com sucesso",
                 OffsetDateTime.now(),
-                request.getValor()
+                request.valor()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
